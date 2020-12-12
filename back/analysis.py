@@ -66,5 +66,7 @@ def get_security(url) -> float:
             ssl_validity = False
         if ssl_validity == True:
             return 10
+        else:
+            return 0
     except Exception as e:
         return 0
