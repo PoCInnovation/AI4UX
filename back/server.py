@@ -9,7 +9,7 @@ app = flask.Flask(__name__)
 
 @app.route("/", methods=['GET'])
 def home():
-    return ""
+    return "200"
 
 
 @app.route("/analyze/speedtest", methods=['GET'])
@@ -35,4 +35,4 @@ def analyze_horizontal_scroll():
     url: str = request.args.get("url")
     return str(horizontal_scroll(url))
 
-app.run()
+app.run(host="0.0.0.0")
