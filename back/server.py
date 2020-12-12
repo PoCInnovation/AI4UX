@@ -9,7 +9,7 @@ app = flask.Flask(__name__)
 
 @app.route("/", methods=['GET'])
 def home():
-    return ""
+    return "200"
 
 
 @app.route("/analyze/speedtest", methods=['GET'])
@@ -31,4 +31,4 @@ def analyze():
         return 'wrong url', 404
 
 
-app.run()
+app.run(host="0.0.0.0")

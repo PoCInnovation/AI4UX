@@ -46,6 +46,7 @@ def ssl_expiry_datetime(hostname):
         return False
     return datetime.datetime.strptime(ssl_info['notAfter'], ssl_dateformat)
 
+
 def get_security(url) -> float:
     """
     Check if the given url has a ssl certificate and use https.
