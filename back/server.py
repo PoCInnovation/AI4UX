@@ -2,7 +2,7 @@ import flask
 import requests as http
 
 from flask import request
-from analysis import speedtest
+from analysis import speedtest, horizontal_scroll
 
 app = flask.Flask(__name__)
 
@@ -30,5 +30,9 @@ def analyze():
     except Exception:
         return 'wrong url', 404
 
+@app.route("/analyze/horizontal_scroll", methods=["GET"])
+def analyze_horizontal_scroll():
+    url: str = request.args.get("url")
+    return str(horizontal_scroll(url))
 
 app.run()

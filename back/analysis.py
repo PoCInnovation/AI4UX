@@ -2,6 +2,7 @@ import requests
 import json
 import socket
 import ssl
+from selenium import webdriver
 import datetime
 import urllib.parse
 
@@ -26,6 +27,17 @@ def speedtest(url) -> Tuple[float, float]:
     mobile_score = mobile_res.get('lighthouseResult').get('categories').get('performance').get('score', None)
 
     return browser_score, mobile_score
+
+
+def horizontal_scroll(url: str) -> bool:
+    """ True if there is a horizontal scroll on the page
+    """
+    driver = webdriver.Firefox()
+    driver.implicitly_wait(3)
+    driver.get(url)
+    js = 'return document.documentElement.scrollWidth>document.documentElement.clientWidth;'
+    res = driver.execute_script(js)
+    return int(res)
 
 
 def ssl_expiry_datetime(hostname):
