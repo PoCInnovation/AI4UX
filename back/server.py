@@ -30,6 +30,7 @@ def analyze():
     except Exception:
         return 'wrong url', 404
 
+
 @app.route("/analyze/horizontal_scroll", methods=["GET"])
 def analyze_horizontal_scroll():
     url: str = request.args.get("url")

@@ -52,6 +52,12 @@ class MyHTMLParser(HTMLParser):
 
 
 def headers_consistency(url: str) -> Tuple[int, int]:
+    """ check headers usage consitency
+    {
+        nb_h1: number of h1 headers on the page (it must not be big)
+        inconsistencies: number of headers change inconsistencies (ex: h4 followed by h1)
+    }
+    """
     driver = webdriver.Firefox()
     driver.implicitly_wait(3)
     driver.get(url)
@@ -67,6 +73,7 @@ def headers_consistency(url: str) -> Tuple[int, int]:
 
 
 def ssl_expiry_datetime(hostname):
+    """ Verify ssl """
     ssl_dateformat = r'%b %d %H:%M:%S %Y %Z'
 
     context = ssl.create_default_context()
