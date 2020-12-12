@@ -1,6 +1,8 @@
 import flask
+import requests as http
+
 from flask import request
-from analysis import Analyzer
+from analysis import speedtest
 
 app = flask.Flask(__name__)
 
@@ -9,10 +11,24 @@ app = flask.Flask(__name__)
 def home():
     return ""
 
-@app.route("/analyze", methods=['GET'])
+
+@app.route("/analyze/speedtest", methods=['GET'])
 def analyze():
     url: str = request.args.get("url")
-    a = Analyzer(url)
-    return str(a.get_security())
+
+    print(url)
+    try:
+        http.head(url)
+        browser_score, mobile_score = speedtest(url)
+
+        response = {
+            "mobile": mobile_score,
+            "browser": browser_score
+        }
+
+        return response
+    except Exception:
+        return 'wrong url', 404
+
 
 app.run()
