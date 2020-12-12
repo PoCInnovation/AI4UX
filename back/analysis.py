@@ -30,8 +30,7 @@ def speedtest(url) -> Tuple[float, float]:
 
 
 def horizontal_scroll(url: str) -> bool:
-    """ True if there is a horizontal scroll on the page
-    """
+    """ True if there is a horizontal scroll on the page """
     driver = webdriver.Firefox()
     driver.implicitly_wait(3)
     driver.get(url)
@@ -41,6 +40,7 @@ def horizontal_scroll(url: str) -> bool:
 
 
 def ssl_expiry_datetime(hostname):
+    """ Verify ssl """
     ssl_dateformat = r'%b %d %H:%M:%S %Y %Z'
 
     context = ssl.create_default_context()
