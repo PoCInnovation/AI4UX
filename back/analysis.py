@@ -1,5 +1,9 @@
 import requests
 import json
+import socket
+import ssl
+import datetime
+import urllib.parse
 
 from typing import Tuple
 
@@ -24,8 +28,45 @@ def speedtest(url) -> Tuple[float, float]:
     return browser_score, mobile_score
 
 
+def ssl_expiry_datetime(hostname):
+    ssl_dateformat = r'%b %d %H:%M:%S %Y %Z'
+
+    context = ssl.create_default_context()
+    context.check_hostname = False
+
+    conn = context.wrap_socket(
+        socket.socket(socket.AF_INET),
+        server_hostname=hostname,
+    )
+    conn.settimeout(5.0)
+
+    conn.connect((hostname, 443))
+    ssl_info = conn.getpeercert()
+    if str(ssl_info).find(hostname) == -1:
+        return False
+    return datetime.datetime.strptime(ssl_info['notAfter'], ssl_dateformat)
+
 def get_security(url) -> float:
-    """ check security of the given website
-    :return: Float
     """
-    return 0.5
+    Check if the given url has a ssl certificate and use https.
+    :return: 0 if there is no SSL, 5 if the name in the SSL is wrong
+    and 10 if there is a SSL certificate with the good name
+    """
+    parsed_url = urllib.parse.urlparse(url)
+    now = datetime.datetime.now()
+    try:
+        expire = ssl_expiry_datetime(parsed_url.netloc)
+        if expire == False:
+            return 5
+        diff = expire - now
+        days_left = str(diff).split()
+        if int(days_left[0]) > 0:
+            ssl_validity = True
+        else:
+            ssl_validity = False
+        if ssl_validity == True:
+            return 10
+        else:
+            return 0
+    except Exception as e:
+        return 0
