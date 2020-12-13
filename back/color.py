@@ -10,6 +10,7 @@ def nbColor_daltonisme(image, total):
     protanopie = [] # Ne voit pas le rouge
     deutéranopie = [] # Ne voit pas le vert
     tritanopie = [] # Ne voit pas le bleu
+    color_tab =  []
     colors, pixel_count = extcolors.extract_from_image(image)
     above = 0
     for color in colors:
@@ -22,7 +23,9 @@ def nbColor_daltonisme(image, total):
             deutéranopie.append(color)
         if percentage > 5 and color[0][0] > 200 and color[0][1] < 200 and color[0][2] < 200:
             protanopie.append(color)
-    return above, (len(protanopie) + len(deutéranopie) + len(tritanopie)) / len(colors)
+        color_tuple = (color[0][0], color[0][1], color[0][2], percentage)
+        color_tab.append(color_tuple)
+    return above, (len(protanopie) + len(deutéranopie) + len(tritanopie)) / len(colors), color_tab
 
 def padding_ratio(image, total):
     colors, pixel = extcolors.extract_from_image(image)
@@ -39,7 +42,7 @@ def padding_ratio(image, total):
 def dataColor(image):
     width, height = image.size
     total = width * height
-    above, score_dalto = nbColor_daltonisme(image, total)
+    above, score_dalto, color_tab = nbColor_daltonisme(image, total)
     image_first = new_image(image, 0, 0, width // 4, height)
     size_first_w, size_first_h = image_first.size
     total_first = size_first_w * size_first_h
@@ -55,7 +58,7 @@ def dataColor(image):
     if score_color < 0.0:
         score_color = 0.0
 
-    return score_color, 1 - score_dalto, round(percent_first) / 100 , round(percent_forth) / 100
+    return score_color, 1 - score_dalto, round(percent_first) / 100 , round(percent_forth) / 100, color_tab
 
 if __name__ == "__main__":
     ## IMAGE ##
