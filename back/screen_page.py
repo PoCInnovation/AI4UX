@@ -4,14 +4,8 @@ from typing import Tuple
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 
-# from selenium.webdriver.chrome.options import Options
-
-
 options = webdriver.ChromeOptions()
 options.headless = True
-
-URL = 'https://pythonbasics.org'
-
 
 def screen_web_page(url: str, size: Tuple[int, int], output: str) -> None:
     """
@@ -20,7 +14,9 @@ def screen_web_page(url: str, size: Tuple[int, int], output: str) -> None:
     :param size: (width, height) of the page
     :param output: file
     """
+    
     driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
+    
     width, height = size
 
     driver.get(url)
@@ -32,4 +28,5 @@ def screen_web_page(url: str, size: Tuple[int, int], output: str) -> None:
 
 
 # Example
-# screen_web_page(URL, (1920, 1080), 'output.png')
+if __name__ == "__main__":
+    screen_web_page('https://pythonbasics.org', (1920, 1080), 'output.png')
