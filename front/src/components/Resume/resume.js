@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from "react";
 import '../content.css'
 
-import { CircularProgressbar } from 'react-circular-progressbar';
+import {CircularProgressbar} from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 
-function Perfomance({ perf }) {
+function Perfomance({perf, desc}) {
+    console.log('perf:' + perf)
     if (perf < 0) {
         return (
             <div>
@@ -20,20 +21,22 @@ function Perfomance({ perf }) {
         )
     } else {
         return (
-            <div style={{width: "100px", height: "100px", display: "flex"}}>
-                <CircularProgressbar value={perf.browser * 100} text={`${perf.browser * 100}%`}/>
+            <div>
+                <div style={{width: "100px", height: "100px", display: "flex"}}>
+                    <CircularProgressbar value={perf * 100} text={`${desc}`}/>
+                </div>
             </div>
         )
     }
 }
 
-export default function Resume({ perf }) {
+export default function Resume({results}) {
     return (
         <div className="Resume">
             <div className="Resume-cent">
-                <Perfomance perf={perf}/>
-                <Perfomance perf={perf}/>
-                <Perfomance perf={perf}/>
+                <Perfomance perf={results['0']} desc={"Perf"}/>
+                <Perfomance perf={results['1']} desc={"Design"}/>
+                <Perfomance perf={results['7']} desc={"Clutter"}/>
             </div>
         </div>
     )
