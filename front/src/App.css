@@ -1,3 +1,12 @@
 .App {
+  position: absolute;
+  top: 30%;
+  left: 40%;
   text-align: center;
+}
+
+.Title {
+  vertical-align: text-bottom;
+  font-size: xx-large;
+  color: #DB4D55;
 }
