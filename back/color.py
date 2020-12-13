@@ -36,21 +36,28 @@ def padding_ratio(image, total):
             i += 1
     return total_percent
 
+def dataColor(image):
+    width, height = image.size
+    total = width * height
+    above, score_dalto = nbColor_daltonisme(image, total)
+    image_first = new_image(image, 0, 0, width // 4, height)
+    size_first_w, size_first_h = image_first.size
+    total_first = size_first_w * size_first_h
+    percent_first = padding_ratio(image_first, total_first)
+    image_forth = new_image(image, (width // 4) * 3, 0, width, height)
+    size_forth_w, size_forth_h = image_forth.size
+    total_forth = size_forth_w * size_forth_h
+    percent_forth = padding_ratio(image_forth, total_forth)
+
+    score_color = 1.0
+    if above > 3:
+        score_color -= 0.15 * (above - 3)
+    if score_color < 0.0:
+        score_color = 0.0
+
+    return score_color, 1 - score_dalto, round(percent_first) / 100 , round(percent_forth) / 100
+
 ## IMAGE ##
 image = PIL.Image.open("web_screenshot.png")
-width, height = image.size
-total = width * height
-above, score_dalto = nbColor_daltonisme(image, total)
-print(f"\nNombre de couleurs principales : {above} ; Score daltonisme : {score_dalto:.2f}")
 
-## FIRST QUARTER ##
-image_first = new_image(image, 0, 0, width // 4, height)
-size_first_w, size_first_h = image_first.size
-total_first = size_first_w * size_first_h
-print(f"\nTotal de vide à gauche : {padding_ratio(image_first, total_first):.2f}%")
-
-## FORTH QUARTER ##
-image_forth = new_image(image, (width // 4) * 3, 0, width, height)
-size_forth_w, size_forth_h = image_forth.size
-total_forth = size_forth_w * size_forth_h
-print(f"\nTotal de vide à droite : {padding_ratio(image_forth, total_forth):.2f}%")
+print(dataColor(image))
