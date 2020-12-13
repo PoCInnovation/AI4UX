@@ -1,12 +1,22 @@
 .App {
-  position: absolute;
-  top: 30%;
-  left: 40%;
-  text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 30vh;
 }
 
 .Title {
-  vertical-align: text-bottom;
-  font-size: xx-large;
-  color: #DB4D55;
+    vertical-align: text-bottom;
+    font-size: xx-large;
+    color: #DB4D55;
+}
+
+.Footer {
+    position: fixed;
+    left: 50%;
+    bottom: 0;
+    transform: translate(-50%, -50%);
+    margin: 0 auto;
+    color: #FFF;
 }
