@@ -1,6 +1,11 @@
 import React, {useEffect, useState} from "react";
 import '../content.css'
 
+import ReactWordcloud from 'react-wordcloud';
+
+import 'tippy.js/dist/tippy.css';
+import 'tippy.js/animations/scale.css';
+
 import {CircularProgressbar} from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 
@@ -30,6 +35,15 @@ function Perfomance({perf, desc}) {
     }
 }
 
+function getRandomInt(max) {
+    return Math.floor(Math.random() * Math.floor(max));
+}
+
+function transform(words) {
+    console.log('words:' + words)
+    return words.map((word) => ({text: word, value: getRandomInt(40) + 60}))
+}
+
 export default function Resume({results}) {
     return (
         <div className="Resume">
@@ -37,6 +51,12 @@ export default function Resume({results}) {
                 <Perfomance perf={results['0']} desc={"Perf"}/>
                 <Perfomance perf={results['1']} desc={"Design"}/>
                 <Perfomance perf={results['7']} desc={"Clutter"}/>
+            </div>
+            <div className="Keywords">
+                <h2>Keywords</h2>
+                <div>
+                    <ReactWordcloud size={[200, 300]} words={transform(results['13'].browser)}/>
+                </div>
             </div>
         </div>
     )

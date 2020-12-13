@@ -52,7 +52,6 @@ h2 {
 .Resume {
     background-color: #43447C;
     width: 100%;
-    height: 100%;
 
     border-radius: 15px;
     padding: 15px;
@@ -63,7 +62,6 @@ h2 {
 
 .Resume-cent {
     width: 100%;
-    background-color: red;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
@@ -76,4 +74,8 @@ h2 {
 .Column {
     color: #FFFFFF;
     margin: 5px;
+}
+
+.Keywords {
+    margin-top: 15px;
 }
