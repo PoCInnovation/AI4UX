@@ -48,7 +48,7 @@ If you want to use our tool, just click [here](https://ai4ux.poc-innovation.com/
 
 Or go to this link https://ai4ux.poc-innovation.com/
 
-## Try it yourself!
+## Host it yourself!
 
 Clone the repository and launch the following command from the root:
 ```bash
