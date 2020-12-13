@@ -70,4 +70,14 @@ def train_model():
     model.save("./conv2d.torch")
     return {"predictions": pred}
 
+@app.route("/model/predict", methods=["POST"])
+def predict_model():
+    url: str = request.args.get("url")
+    t_url = request.json['target_url']
+    model = Model(Conv2D)
+    model.load("./conv2d.torch")
+    screen_web_page(t_url, (1920, 1080), "model_train.jpg")
+    return {"predictions": model.predict(Image.open("model_train.jpg"))}
+
+
 app.run(host="0.0.0.0")
