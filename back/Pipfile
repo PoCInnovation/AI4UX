@@ -15,6 +15,7 @@ pyenchant = "*"
 torch = "*"
 Pillow = "*"
 numpy = "*"
+requests_html = "*"
 
 [dev-packages]
 
