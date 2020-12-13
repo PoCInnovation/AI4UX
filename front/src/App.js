@@ -7,7 +7,10 @@ function App() {
     const [url, setURL] = useState("")
     const [analyse, setAnalyse] = useState(false)
 
-    const align = {
+    const titleAlign = {
+        verticalAlign: "text-bottom",
+        fontSize: "xx-large",
+        color: "#DB4D55",
         textAlign: "center",
     }
     const defaultTitle = {
@@ -16,6 +19,13 @@ function App() {
         color: "#DB4D55",
     }
 
+    const inputAlign = {
+        position: "fixed",
+        left: "50%",
+        bottom: "70px",
+        transform: "translate(-50%, -50%)",
+        margin: "0 auto",
+    }
     const defaultInput = {
         padding: "10px",
         borderRadius: "5px",
@@ -23,34 +33,36 @@ function App() {
         height: "35px",
         outline: "none",
         border: 0,
-        //display: 'inline-block',
-        //marginRight: "20px",
-        //marginTop: "-10px"
+        display: 'inline-block',
+        marginRight: "20px",
+        marginTop: "-10px"
     }
 
     const defaultApp = {
-        //display: "flex",
-        //flexDirection: "column",
-        //alignItems: "center",
-        //justifyContent: "center",
-        //marginTop: "30vh",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        marginTop: "30vh",
     }
     async function handleAnalyse() {
         if (url.length === 0) {
             return
         }
-        setAnalyse(true)
+        if (analyse === false) {
+            setAnalyse(!analyse)
+        }
         setPageName(url)
     }
 
     return (
         <div>
-            <div style={analyse === true ? "" : defaultApp}>
-                <p style={defaultTitle, align}>{pageName}</p>
+            <div style={analyse === true ? {} : defaultApp}>
+                <p style={analyse === true ? titleAlign : defaultTitle}>{pageName}</p>
                 {
 
                 }
-                <div>
+                <div style={analyse === true ? inputAlign : {}}>
                     <input type="text" placeholder="Enter an url" onChange={event => {setURL(event.target.value)}} style={defaultInput}/>
                     <Button variant="contained" color="primary" onClick={handleAnalyse}>
                         Analyse
