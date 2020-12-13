@@ -30,5 +30,4 @@ def analyze():
     except Exception:
         return 'wrong url', 404
 
-
 app.run()

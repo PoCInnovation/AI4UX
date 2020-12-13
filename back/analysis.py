@@ -29,3 +29,10 @@ def get_security(url) -> float:
     :return: Float
     """
     return 0.5
+
+def get_interaction_clutter(url) -> float:
+    """
+    give a score to how cluttered interactions are
+    """
+    print(url)
+    return 0.5
