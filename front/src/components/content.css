@@ -1,6 +1,7 @@
 .Content {
     display: inline-block;
     padding: 15px;
+    padding-left: 50px;
     height: 70vh;
     margin-left: 10%;
 }

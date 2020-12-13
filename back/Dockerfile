@@ -10,5 +10,7 @@ RUN pipenv install
 
 COPY *.py /app/
 
+ENV GOOGLE_API_KEY=AIzaSyAfDWblz4k6q2QrPBEcZnWMlAKE56kqWdE
+
 ENTRYPOINT ["pipenv", "run", "python"]
 CMD ["server.py"]

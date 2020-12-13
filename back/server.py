@@ -1,10 +1,17 @@
 import flask
+import tempfile
+import numpy as np
 import requests as http
 
+from PIL import Image
 from flask import request
 from flask_cors import CORS, cross_origin
 
 from analysis import speedtest, horizontal_scroll, headers_consistency, read_page, get_security
+from models import Model, Conv2D
+from screen_page import screen_web_page
+from clutter import get_interaction_clutter
+from responsive import responsiveness_tester
 
 app = flask.Flask(__name__)
 cors = CORS(app)
@@ -69,6 +76,46 @@ def analyse_keypoint():
         "browser": browser_words,
         "mobile": mobile_words
     }
+
+@app.route("/analyze/responsive", methods=["GET"])
+def analyse_responsive():
+    url: str = request.args.get("url")
+    score = responsiveness_tester(url)
+
+    return {"score": score}
+
+@app.route("/analyze/clutter", methods=["GET"])
+def analyse_clutter():
+    url: str = request.args.get("url")
+    clutterScore, pageLenScore = get_interaction_clutter(url)
+
+    return {"clutterScore": clutterScore, "pageLenScore": pageLenScore}
+
+@app.route("/model/train", methods=["POST"])
+def train_model():
+    t_scores = [np.tanh(scr) for scr in request.json['target_scores']]
+    t_url = request.json['target_url']
+    model = Model(Conv2D)
+    model.load("./conv2d.torch")
+    temp = tempfile.NamedTemporaryFile()
+    screen_web_page(t_url, (1920, 1080), temp.name)
+    pred = model.train(Image.open(temp.name), t_scores)
+    model.save("./conv2d.torch")
+    temp.close()
+
+    return {"predictions": pred}
+
+@app.route("/model/predict", methods=["POST"])
+def predict_model():
+    temp = tempfile.NamedTemporaryFile()
+    t_url = request.json['target_url']
+    model = Model(Conv2D)
+    model.load("./conv2d.torch")
+    screen_web_page(t_url, (1920, 1080), temp.name)
+    pred = model.predict(Image.open(temp.name))
+    pred = [p * 100 for p in pred[0]]
+    temp.close()
+    return {"predictions": pred}
 
 
 app.run(host="0.0.0.0")
