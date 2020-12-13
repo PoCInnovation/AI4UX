@@ -11,7 +11,6 @@ const sdk = require('../../services/apiSDK');
 const ApiSDK = new sdk.ApiSDK()
 
 
-
 function Perfomance({ url }) {
     const [perf, setPerf] = useState(-1)
 
@@ -22,15 +21,12 @@ function Perfomance({ url }) {
             setPerf(() => res);
         }
         checkPerf()
-        console.log(perf)
-        console.log(perf.browser)
-        console.log(perf.mobile)
     }, [])
 
     if (perf < 0) {
         return (
             <div>
-                <CircularProgress style={{marginLeft: "-240px",}}/>
+                <CircularProgress style={{marginLeft: "-240px", display: "flex"}}/>
             </div>
         )
     } else if (!perf || perf === 0) {
@@ -39,7 +35,7 @@ function Perfomance({ url }) {
         )
     } else {
         return (
-            <div style={{width: "100px", height: "100px"}} >
+            <div style={{width: "100px", height: "100px", display: "flex"}}>
                 <CircularProgressbar value={perf.browser * 100} text={`${perf.browser * 100}%`}/>
             </div>
         )
@@ -49,7 +45,11 @@ function Perfomance({ url }) {
 export default function Resume({ url }) {
     return (
         <div className="Resume">
-            <Perfomance url={url}/>
+            <div className="Resume-cent">
+                <Perfomance url={url}/>
+                <Perfomance url={url}/>
+                <Perfomance url={url}/>
+            </div>
         </div>
     )
 }

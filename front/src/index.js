@@ -12,7 +12,7 @@ const theme = createMuiTheme({
             main: "#DB4D55"
         },
         secondary: {
-            main: "#FFFFFF"
+            main: "#32dd0d"
         },
         multilineColor:{
             color:'red'

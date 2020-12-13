@@ -55,7 +55,7 @@ function App() {
         marginTop: "30vh",
     }
     async function handleAnalyse() {
-        if (url.length === 0 || (await ApiSDK.checkURL(url)) === false) {
+        if (url.length === 0 || (await ApiSDK.checkURL(url, false)) === false) {
             setAlert(true)
             setTimeout(function(){ setAlert(false); }, 3000);
             return
