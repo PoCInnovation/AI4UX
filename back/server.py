@@ -3,12 +3,13 @@ import tempfile
 import numpy as np
 import requests as http
 
+from PIL import Image
 from flask import request
 
-from analysis import speedtest, horizontal_scroll, headers_consistency, read_page
 from models import Model, Conv2D
 from screen_page import screen_web_page
-from PIL import Image
+from responsive import responsiveness_tester
+from analysis import speedtest, horizontal_scroll, headers_consistency, read_page
 
 app = flask.Flask(__name__)
 
@@ -59,6 +60,12 @@ def analyse_keypoint():
         "mobile": mobile_words
     }
 
+@app.route("/analyze/responsive", methods=["GET"])
+def analyse_responsive():
+    url: str = request.args.get("url")
+    score = responsiveness_tester(url)
+
+    return {"score": score}
 
 @app.route("/model/train", methods=["POST"])
 def train_model():
