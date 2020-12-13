@@ -14,8 +14,8 @@ We made in-depth analysis algorithms to evaluate:
 2. We also analyzed the page length and the number of items shown. This KPI is important to evaluate the complexity of the website, and therefore the difficulty to get all information for the user.
 3. The load speed of the website (on desktop and mobile). A slow site implies a ruined user experience. We put this metrics in the core of our analysis to evaluate the performance of the website.
 4. The information ordering. We think that the more a user scrolls on your website, the less the information he encounters should be important. Important pieces of information should be placed right at the beginning of each of your website page. In order to check this, we run two checks :
-  * first we analyze the header consistency of each of the website pages : if a page mixes small and big titles in an unordered way, we reduce its efficiency score. This algorithm are defined [here](https://github.com/AI4UX/2020_PoC/blob/master/back/analysis.py)
-  * then we perform keywords analysis on the top part of each pages. We analyze their relevance and importance for the user. Those keywords are then displayed on the frontend of the project after the analysis. This part uses computer vision algorithms, which implementations can be found [here](https://github.com/AI4UX/2020_PoC/blob/master/back/analysis.py)
+     * first we analyze the header consistency of each of the website pages : if a page mixes small and big titles in an unordered way, we reduce its efficiency score. This algorithm are defined [here](https://github.com/AI4UX/2020_PoC/blob/master/back/analysis.py)
+     * then we perform keywords analysis on the top part of each pages. We analyze their relevance and importance for the user. Those keywords are then displayed on the frontend of the project after the analysis. This part uses computer vision algorithms, which implementations can be found [here](https://github.com/AI4UX/2020_PoC/blob/master/back/analysis.py)
 
 
 #### UI analysis
