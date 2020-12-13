@@ -1,4 +1,6 @@
 import flask
+import tempfile
+import numpy as np
 import requests as http
 
 from flask import request
@@ -60,24 +62,29 @@ def analyse_keypoint():
 
 @app.route("/model/train", methods=["POST"])
 def train_model():
-    url: str = request.args.get("url")
-    t_scores = request.json['target_scores']
+    t_scores = [np.tanh(scr) for scr in request.json['target_scores']]
     t_url = request.json['target_url']
     model = Model(Conv2D)
     model.load("./conv2d.torch")
-    screen_web_page(t_url, (1920, 1080), "model_train.jpg")
-    pred = model.train(Image.open("model_train.jpg"), t_scores)
+    temp = tempfile.NamedTemporaryFile()
+    screen_web_page(t_url, (1920, 1080), temp.name)
+    pred = model.train(Image.open(temp.name), t_scores)
     model.save("./conv2d.torch")
+    temp.close()
+
     return {"predictions": pred}
 
 @app.route("/model/predict", methods=["POST"])
 def predict_model():
-    url: str = request.args.get("url")
+    temp = tempfile.NamedTemporaryFile()
     t_url = request.json['target_url']
     model = Model(Conv2D)
     model.load("./conv2d.torch")
-    screen_web_page(t_url, (1920, 1080), "model_train.jpg")
-    return {"predictions": model.predict(Image.open("model_train.jpg"))}
+    screen_web_page(t_url, (1920, 1080), temp.name)
+    pred = model.predict(Image.open(temp.name))
+    pred = [p * 100 for p in pred[0]]
+    temp.close()
+    return {"predictions": pred}
 
 
 app.run(host="0.0.0.0")

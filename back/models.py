@@ -36,7 +36,7 @@ class Conv2D(nn.Module):
         t = F.relu(t)
         
         t = self.out(t)
-        return F.relu(t)
+        return F.sigmoid(t)
 
 class Model():
     def __init__(self, modelClass, lr=0.01):
@@ -71,7 +71,7 @@ if __name__ == "__main__":
     conv1 = nn.Conv2d(in_channels=4, out_channels=8, kernel_size=5)
     conv2 = nn.Conv2d(in_channels=8, out_channels=16, kernel_size=5)
 
-    t = Image.open("testing.jpg")
+    t = Image.open("model_train.jpg")
     t = t.resize((256, 256))
     t = torch.tensor(numpy.array(t)).float()
     if len(t.shape) == 3:
