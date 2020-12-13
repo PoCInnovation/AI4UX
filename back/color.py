@@ -1,16 +1,18 @@
 import extcolors
 import PIL
 
+
 def new_image(image, x1, y1, x2, y2):
     area = (x1, y1, x2, y2)
     tmp = image.crop(area)
     return tmp
 
+
 def nbColor_daltonisme(image, total):
-    protanopie = [] # Ne voit pas le rouge
-    deutéranopie = [] # Ne voit pas le vert
-    tritanopie = [] # Ne voit pas le bleu
-    color_tab =  []
+    protanopie = []  # Ne voit pas le rouge
+    deutéranopie = []  # Ne voit pas le vert
+    tritanopie = []  # Ne voit pas le bleu
+    color_tab = []
     colors, pixel_count = extcolors.extract_from_image(image)
     above = 0
     for color in colors:
@@ -27,6 +29,7 @@ def nbColor_daltonisme(image, total):
         color_tab.append(color_tuple)
     return above, (len(protanopie) + len(deutéranopie) + len(tritanopie)) / len(colors), color_tab
 
+
 def padding_ratio(image, total):
     colors, pixel = extcolors.extract_from_image(image)
     i = 0
@@ -38,6 +41,7 @@ def padding_ratio(image, total):
             total_percent += percentage
             i += 1
     return total_percent
+
 
 def dataColor(image):
     width, height = image.size
@@ -58,7 +62,8 @@ def dataColor(image):
     if score_color < 0.0:
         score_color = 0.0
 
-    return score_color, 1 - score_dalto, round(percent_first) / 100 , round(percent_forth) / 100, color_tab
+    return score_color, 1 - score_dalto, round(percent_first) / 100, round(percent_forth) / 100, color_tab
+
 
 if __name__ == "__main__":
     ## IMAGE ##

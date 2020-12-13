@@ -1,0 +1,81 @@
+.Content {
+    display: inline-block;
+    padding: 15px;
+    padding-left: 50px;
+    height: 70vh;
+    margin-left: 10%;
+}
+
+.Left-side {
+    height: 100%;
+    width: 40%;
+
+    float: left;
+}
+
+.Accessibility {
+    background-color: #43447C;
+    width: 100%;
+
+    min-width: 230px;
+
+    border-radius: 10px;
+    margin-bottom: 15px;
+
+    padding: 5px;
+}
+
+
+h2 {
+    margin: 0;
+    padding: 0;
+    color: #FFFFFF;
+}
+
+.UI {
+    background-color: #43447C;
+    width: 100%;
+    height: 40%;
+
+    min-width: 230px;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+.Right-side {
+    width: 52.5vw;
+    height: 82.5%;
+
+    margin-left: 50%;
+}
+
+.Resume {
+    background-color: #43447C;
+    width: 100%;
+
+    border-radius: 15px;
+    padding: 15px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.Resume-cent {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.SSL {
+    background-color: red;
+}
+
+.Column {
+    color: #FFFFFF;
+    margin: 5px;
+}
+
+.Keywords {
+    margin-top: 15px;
+}

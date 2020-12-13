@@ -11,10 +11,11 @@ import pytesseract
 import string
 import enchant
 
+from webdriver_manager.chrome import ChromeDriverManager
+
 from screen_page import screen_web_page
 
 from typing import Tuple
-
 
 language = enchant.Dict('en_US')
 
@@ -48,16 +49,30 @@ def speedtest(url: str) -> Tuple[float, float]:
     Analyse performance of the website thanks to Google API.
     :return: A tuple of performance's rate (browser, mobile)
     """
-    browser_res = requests.get('https://www.googleapis.com/pagespeedonline/v5/runPagespeed?'
-                               'strategy=DESKTOP'
-                               '&url=' + url)
-    browser_res = json.loads(browser_res.text)
+    browser_res = None
+    mobile_res = None
+
+    for i in range(3):
+        browser_res = requests.get('https://www.googleapis.com/pagespeedonline/v5/runPagespeed?'
+                                   'strategy=DESKTOP'
+                                   '&url=' + url)
+        browser_res = json.loads(browser_res.text)
+        if browser_res:
+            break
+    if not browser_res:
+        return 0.5, 0.5
     browser_score = browser_res.get('lighthouseResult').get('categories').get('performance').get('score', None)
 
-    mobile_res = requests.get('https://www.googleapis.com/pagespeedonline/v5/runPagespeed?'
+    for i in range(3):
+        mobile_res = requests.get('https://www.googleapis.com/pagespeedonline/v5/runPagespeed?'
                               'strategy=MOBILE'
                               '&url=' + url)
-    mobile_res = json.loads(mobile_res.text)
+        mobile_res = json.loads(mobile_res.text)
+        if not mobile_res:
+            break
+    if not mobile_res:
+        return 0.5, 0.5
+
     mobile_score = mobile_res.get('lighthouseResult').get('categories').get('performance').get('score', None)
 
     return browser_score, mobile_score
@@ -68,7 +83,7 @@ def horizontal_scroll(url: str) -> int:
     """
     options = webdriver.ChromeOptions()
     options.headless = True
-    driver = webdriver.Chrome(options=options)
+    driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
     driver.implicitly_wait(3)
     driver.get(url)
     js = 'return document.documentElement.scrollWidth>document.documentElement.clientWidth;'
@@ -95,8 +110,8 @@ def headers_consistency(url: str) -> Tuple[int, int]:
     """
     options = webdriver.ChromeOptions()
     options.headless = True
-    
-    driver = webdriver.Chrome(options=options)
+
+    driver = webdriver.Chrome(ChromeDriverManager().install(), options=options)
     driver.implicitly_wait(3)
     driver.get(url)
     page = driver.page_source
@@ -105,7 +120,7 @@ def headers_consistency(url: str) -> Tuple[int, int]:
     parser.feed(page)
     anomaly = 0
     for i in range(len(parser.headers) - 1):
-        if int(parser.headers[i][1]) - int(parser.headers[i+1][1]) > 1:
+        if int(parser.headers[i][1]) - int(parser.headers[i + 1][1]) > 1:
             anomaly += 1
     return {"nb_h1": nb_h1, "inconsistencies": anomaly}
 

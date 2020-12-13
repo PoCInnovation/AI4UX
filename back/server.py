@@ -3,6 +3,8 @@ import tempfile
 import numpy as np
 import requests as http
 
+from flask_cors import CORS, cross_origin
+
 from PIL import Image
 from flask import request
 
@@ -11,20 +13,21 @@ from models import Model, Conv2D
 from screen_page import screen_web_page
 from clutter import get_interaction_clutter
 from responsive import responsiveness_tester
-from analysis import speedtest, horizontal_scroll, headers_consistency, read_page
+from analysis import speedtest, horizontal_scroll, headers_consistency, read_page, get_security
 
 app = flask.Flask(__name__)
+CORS(app)
 
 
-@app.route("/", methods=['GET'])
 def home():
     return "200"
 
 
-@app.route("/analyze/speedtest", methods=['GET'])
-def analyze_speedtest():
-    url: str = request.args.get("url")
+def analyse_security(url):
+    return get_security(url)
 
+
+def analyze_speedtest(url):
     try:
         http.head(url)
         browser_score, mobile_score = speedtest(url)
@@ -37,22 +40,21 @@ def analyze_speedtest():
         return response
     except Exception as e:
         print("ERROR:", e)
-        return 'wrong url', 404
+        return {
+            "mobile": 0.5,
+            "browser": 0.5
+        }
 
 
-@app.route("/analyze/horizontal_scroll", methods=["GET"])
-def analyze_horizontal_scroll():
-    url: str = request.args.get("url")
+def analyze_horizontal_scroll(url):
     return str(horizontal_scroll(url))
 
-@app.route("/analyze/headers_consistency", methods=["GET"])
-def analyze_headers_consistency():
-    url: str = request.args.get("url")
+
+def analyze_headers_consistency(url):
     return headers_consistency(url)
 
-@app.route("/analyze/keypoint", methods=["GET"])
-def analyse_keypoint():
-    url: str = request.args.get("url")
+
+def analyse_keypoint(url):
 
     browser_words = read_page(url, (1920, 1080))
     mobile_words = read_page(url, (320, 480))
@@ -62,50 +64,56 @@ def analyse_keypoint():
         "mobile": mobile_words
     }
 
-@app.route("/analyze/responsive", methods=["GET"])
-def analyse_responsive():
-    url: str = request.args.get("url")
+
+def analyse_responsive(url):
     score = responsiveness_tester(url)
 
     return {"score": score}
 
-@app.route("/analyze/clutter", methods=["GET"])
-def analyse_clutter():
-    url: str = request.args.get("url")
+
+def analyse_clutter(url):
     clutterScore, pageLenScore = get_interaction_clutter(url)
 
     return {"clutterScore": clutterScore, "pageLenScore": pageLenScore}
 
-@app.route("/analyze/colors", methods=["GET"])
-def analyse_colors():
-    url: str = request.args.get("url")
+
+def analyse_colors(url):
     temp = tempfile.NamedTemporaryFile()
     screen_web_page(url, (1920, 1080), temp.name)
     img = Image.open(temp.name)
     colorNumber, colorBlind, paddingRight, paddingLeft, mainColors = dataColor(img)
     temp.close()
 
-    return {"colorNumber": colorNumber, "colorBlind": colorBlind, "paddingRight": paddingRight, "paddingLeft": paddingLeft, "mainColors": mainColors}
+    return {"colorNumber": colorNumber, "colorBlind": colorBlind, "paddingRight": paddingRight,
+            "paddingLeft": paddingLeft, "mainColors": mainColors}
 
-@app.route("/analyze/run", methods=["GET"])
+
 def analyse_run():
     url: str = request.args.get("url")
 
-    speedtest_result = analyze_speedtest()
-    scroll_result = analyze_horizontal_scroll()
-    hearders_result = analyze_headers_consistency()
-    keypoint_result = analyse_keypoint()
-    responsive_result = analyse_responsive()
-    clutter_result = analyse_clutter()
-    colors_result = analyse_colors()
+    speedtest_result = analyze_speedtest(url)
+    scroll_result = analyze_horizontal_scroll(url)
+    headers_result = analyze_headers_consistency(url)
+    keypoint_result = analyse_keypoint(url)
+    clutter_result = analyse_clutter(url)
+    responsive_result = analyse_responsive(url)
+    colors_result = analyse_colors(url)
+    security_result = analyse_security(url)
+
+    print(scroll_result)
+    print(headers_result)
+    print(keypoint_result)
+    print(responsive_result)
+    print(clutter_result)
+    print(colors_result)
 
     return {
         "all_result": [
             speedtest_result["mobile"],
             speedtest_result["browser"],
             float(scroll_result),
-            hearders_result["nb_h1"], # ''
-            hearders_result["inconsistencies"], # ''
+            headers_result["nb_h1"],  # ''
+            headers_result["inconsistencies"],  # ''
             responsive_result["score"],
             clutter_result["clutterScore"],
             clutter_result["pageLenScore"],
@@ -114,12 +122,14 @@ def analyse_run():
             colors_result["paddingRight"],
             colors_result["paddingLeft"],
             colors_result["mainColors"],
-            keypoint_result
-            ]
-         }
+            keypoint_result,
+            security_result
+        ]
+    }
 
 
 @app.route("/model/train", methods=["GET"])
+@cross_origin()
 def train_model():
     url: str = request.args.get("url")
     results = analyse_run()
@@ -135,7 +145,9 @@ def train_model():
 
     return {"predictions": pred, "result": results}
 
+
 @app.route("/model/predict", methods=["POST"])
+@cross_origin()
 def predict_model():
     temp = tempfile.NamedTemporaryFile()
     t_url = request.json['target_url']
