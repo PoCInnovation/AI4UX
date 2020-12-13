@@ -58,6 +58,7 @@ Or go to this link https://ai4ux.poc-innovation.com/
 
 Clone the repository and launch the following command from the root:
 ```bash
+git checkout master
 docker-compose up -d --build
 ```
 A popup should then appear.
