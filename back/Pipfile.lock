@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "97f974d5d956ec3e941754f6ad826fec2a96f05ab0cba348fdcd43bf97c37378"
+            "sha256": "ec96ac1fe65674e84d34994fad2e21dcfa9c1704bd415df19416e3c03303a3e1"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -75,6 +75,14 @@
             "markers": "python_version >= '3.6'",
             "version": "==5.0.1"
         },
+        "convcolors": {
+            "hashes": [
+                "sha256:4f66b5bb31521ba4f2e35b53dd355afad5494332177cc3f39cd5007b524c823a",
+                "sha256:8bd75e20b1d17698b6a70ba543cf4c54337143ea3f0dbe061ab0ca450e946ac9"
+            ],
+            "markers": "python_version >= '3.6'",
+            "version": "==1.0.0"
+        },
         "crayons": {
             "hashes": [
                 "sha256:bd33b7547800f2cfbd26b38431f9e64b487a7de74a947b0fafc89b45a601813f",
@@ -89,6 +97,14 @@
             ],
             "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3'",
             "version": "==1.1.0"
+        },
+        "extcolors": {
+            "hashes": [
+                "sha256:14e81457f98555ba36c07a5dde677d1d555e8f4b75633a4fad42df30a27c4f27",
+                "sha256:92bfcd137c415ca1a3463feaa75f4189a7607f5bdf78dfd6a3e924be09e5ab14"
+            ],
+            "index": "pypi",
+            "version": "==1.0.0"
         },
         "fake-useragent": {
             "hashes": [
@@ -347,7 +363,7 @@
                 "sha256:153c62666fe1d55b3941d1634733c02cafb47188fcf282987371e863d58f22e9",
                 "sha256:27d1f1a54e233428b4de3489d516db7d4805f67442bb77a7718cc04d7a40debb"
             ],
-            "markers": "python_version < '4' and python_full_version >= '3.6.1'",
+            "markers": "python_full_version >= '3.6.1' and python_full_version < '4.0.0'",
             "version": "==0.2.2"
         },
         "pyquery": {
@@ -443,7 +459,7 @@
                 "sha256:19188f96923873c92ccb987120ec4acaa12f0461fa9ce5d3d0772bc965a39e08",
                 "sha256:d8ff90d979214d7b4f8ce956e80f4028fc6860e4431f731ea4a8c08f23f99473"
             ],
-            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4' and python_version < '4'",
+            "markers": "python_version >= '2.7' and python_version not in '3.0, 3.1, 3.2, 3.3, 3.4' and python_full_version < '4.0.0'",
             "version": "==1.26.2"
         },
         "w3lib": {

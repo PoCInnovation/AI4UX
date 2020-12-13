@@ -58,7 +58,7 @@ class ApiSDK {
      */
     async getHorizontalScroll(url) {
         const res = await this.requester.get(`/analyze/horizontal_scroll?url=${url}`);
-        return res.data;
+        return res.data === 0;
     }
 
     /**
@@ -68,8 +68,9 @@ class ApiSDK {
      * @returns boolean
      */
     async getHeaderConsistency(url) {
-        const res = await this.requester.get(`/analyze/headers_consistency?url=${url}`);
-        return res.data;
+        const res = await this.requester.get(`/analyze/headers_consistency?url=${url}`).catch((e) => console.log(e))
+        console.log('data' + res.data)
+        return res.data === 0;
     }
 
     /**
@@ -87,6 +88,10 @@ class ApiSDK {
     async getPerformance(url) {
         const res = await this.requester.get(`/analyze/speedtest?url=${url}`);
         return res.data;
+    }
+
+    async getAll(url) {
+        const res = await this.requester.get(`/model/train?url=${url}`)
     }
 }
 

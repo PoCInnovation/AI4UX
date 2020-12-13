@@ -9,6 +9,7 @@
 .Left-side {
     height: 100%;
     width: 40%;
+
     float: left;
 }
 
@@ -16,6 +17,8 @@
     background-color: #43447C;
     width: 100%;
     height: 40%;
+
+    min-width: 200px;
 
     border-radius: 10px;
     margin-bottom: 15px;
@@ -35,6 +38,7 @@ h2 {
     width: 100%;
     height: 40%;
 
+    min-width: 200px;
     border-radius: 10px;
     padding: 5px;
 }
@@ -43,7 +47,7 @@ h2 {
     width: 52.5vw;
     height: 82.5%;
 
-    margin-left: 45%;
+    margin-left: 50%;
 }
 
 .Resume {
@@ -68,4 +72,8 @@ h2 {
 
 .SSL {
     background-color: red;
+}
+
+.Column {
+    margin: 10px;
 }

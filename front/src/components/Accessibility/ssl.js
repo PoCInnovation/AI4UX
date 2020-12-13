@@ -15,29 +15,27 @@ export default function SSL({ url }) {
         async function checkSec() {
             const res = await ApiSDK.getSecurity(url).catch((e) => setSsl(() => 0));
             setSsl(() => res);
-            console.log('ssl: ' + ssl);
         }
         checkSec()
-        console.log('ssl: ' + ssl);
     }, [])
 
     if (ssl === 10) {
         return (
-            <div>
+            <div style={{ minWidth: "250px", }}>
                 <CheckIcon style={{ float: "left", marginRight: "10px" }} color={"secondary"}/>
                 ssl is supported
             </div>
         )
     } else if (ssl === 5) {
         return (
-            <div>
+            <div style={{ minWidth: "250px", }}>
                 <CloseIcon style={{ float: "left" }} color={"primary"}/>
                 ssl is not good supported
             </div>
         )
     } else if (ssl === 0) {
         return (
-            <div>
+            <div style={{ minWidth: "250px", }}>
                 <CloseIcon style={{ float: "left" }} color={"primary"}/>
                 ssl is not supported
             </div>
