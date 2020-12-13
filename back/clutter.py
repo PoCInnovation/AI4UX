@@ -111,7 +111,6 @@ def reqLink(url, depth):
     fin = res
     if (ratio != 0):
         fin = res / ratio
-    print(fin, ratio)
     count.append(fin)
     ratioArr.append(ratio)
     return(count, ratioArr)

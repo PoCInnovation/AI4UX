@@ -68,5 +68,4 @@ def dataColor(image):
 if __name__ == "__main__":
     ## IMAGE ##
     image = PIL.Image.open("web_screenshot.png")
-
     print(dataColor(image))
