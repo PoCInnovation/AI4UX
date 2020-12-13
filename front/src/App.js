@@ -9,7 +9,7 @@ const sdk = require('./services/apiSDK');
 const ApiSDK = new sdk.ApiSDK()
 
 function App() {
-    const [pageName, setPageName] = useState("Venus")
+    const [pageName, setPageName] = useState("UX Analyser")
     const [url, setURL] = useState("")
     const [analyse, setAnalyse] = useState(false)
     const [alert, setAlert] = useState(false)
@@ -66,7 +66,10 @@ function App() {
             return
         }
         setPageName(url)
-        setClick(true)setResults((await ApiSDK.getAll(url)));
+        setClick(true)
+        const res = await ApiSDK.getAll(url);
+        console.log(res)
+        setResults(res.result.all_result)
         setClick(false);
         setAnalyse(true);
     }
@@ -76,7 +79,7 @@ function App() {
             <div style={analyse === true ? {} : defaultApp}>
                 <p style={analyse === true ? titleAlign : defaultTitle}>{pageName}</p>
                 {
-                    analyse === true ? <Analyze url={url}/> : <div />
+                    analyse === true ? <Analyze results={results}/> : <div />
                 }
                 <div style={analyse === true ? inputAlign : {}}>
                     <input type="text" placeholder="Enter an url" onChange={event => {

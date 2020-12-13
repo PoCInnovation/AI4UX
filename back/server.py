@@ -2,7 +2,6 @@ import flask
 import tempfile
 import numpy as np
 import requests as http
-import json
 
 from flask_cors import CORS, cross_origin
 
@@ -14,7 +13,7 @@ from models import Model, Conv2D
 from screen_page import screen_web_page
 from clutter import get_interaction_clutter
 from responsive import responsiveness_tester
-from analysis import speedtest, horizontal_scroll, headers_consistency, read_page
+from analysis import speedtest, horizontal_scroll, headers_consistency, read_page, get_security
 
 app = flask.Flask(__name__)
 CORS(app)
@@ -24,9 +23,11 @@ def home():
     return "200"
 
 
-def analyze_speedtest():
-    url: str = request.args.get("url")
+def analyse_security(url):
+    return get_security(url)
 
+
+def analyze_speedtest(url):
     try:
         http.head(url)
         browser_score, mobile_score = speedtest(url)
@@ -45,18 +46,15 @@ def analyze_speedtest():
         }
 
 
-def analyze_horizontal_scroll():
-    url: str = request.args.get("url")
+def analyze_horizontal_scroll(url):
     return str(horizontal_scroll(url))
 
 
-def analyze_headers_consistency():
-    url: str = request.args.get("url")
+def analyze_headers_consistency(url):
     return headers_consistency(url)
 
 
-def analyse_keypoint():
-    url: str = request.args.get("url")
+def analyse_keypoint(url):
 
     browser_words = read_page(url, (1920, 1080))
     mobile_words = read_page(url, (320, 480))
@@ -67,22 +65,19 @@ def analyse_keypoint():
     }
 
 
-def analyse_responsive():
-    url: str = request.args.get("url")
+def analyse_responsive(url):
     score = responsiveness_tester(url)
 
     return {"score": score}
 
 
-def analyse_clutter():
-    url: str = request.args.get("url")
+def analyse_clutter(url):
     clutterScore, pageLenScore = get_interaction_clutter(url)
 
     return {"clutterScore": clutterScore, "pageLenScore": pageLenScore}
 
 
-def analyse_colors():
-    url: str = request.args.get("url")
+def analyse_colors(url):
     temp = tempfile.NamedTemporaryFile()
     screen_web_page(url, (1920, 1080), temp.name)
     img = Image.open(temp.name)
@@ -96,13 +91,14 @@ def analyse_colors():
 def analyse_run():
     url: str = request.args.get("url")
 
-    speedtest_result = analyze_speedtest()
-    scroll_result = analyze_horizontal_scroll()
-    headers_result = analyze_headers_consistency()
-    keypoint_result = analyse_keypoint()
-    clutter_result = analyse_clutter()
-    responsive_result = analyse_responsive()
-    colors_result = analyse_colors()
+    speedtest_result = analyze_speedtest(url)
+    scroll_result = analyze_horizontal_scroll(url)
+    headers_result = analyze_headers_consistency(url)
+    keypoint_result = analyse_keypoint(url)
+    clutter_result = analyse_clutter(url)
+    responsive_result = analyse_responsive(url)
+    colors_result = analyse_colors(url)
+    security_result = analyse_security(url)
 
     print(scroll_result)
     print(headers_result)
@@ -126,7 +122,8 @@ def analyse_run():
             colors_result["paddingRight"],
             colors_result["paddingLeft"],
             colors_result["mainColors"],
-            keypoint_result
+            keypoint_result,
+            security_result
         ]
     }
 
