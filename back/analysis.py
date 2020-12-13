@@ -1,3 +1,4 @@
+from html.parser import HTMLParser
 import requests
 import json
 import socket
@@ -62,14 +63,46 @@ def speedtest(url: str) -> Tuple[float, float]:
     return browser_score, mobile_score
 
 
-def horizontal_scroll(url: str) -> bool:
-    """ True if there is a horizontal scroll on the page """
+def horizontal_scroll(url: str) -> int:
+    """ True if there is a horizontal scroll on the page
+    """
     driver = webdriver.Firefox()
     driver.implicitly_wait(3)
     driver.get(url)
     js = 'return document.documentElement.scrollWidth>document.documentElement.clientWidth;'
     res = driver.execute_script(js)
     return int(res)
+
+
+class MyHTMLParser(HTMLParser):
+    def __init__(self):
+        self.headers = []
+        HTMLParser.__init__(self)
+
+    def handle_starttag(self, tag, attrs):
+        if tag.strip() in ["h1", "h2", "h3", "h4", "h5", "h6"] and len(attrs):
+            self.headers.append(tag.strip())
+
+
+def headers_consistency(url: str) -> Tuple[int, int]:
+    """ check headers usage consitency
+    {
+        nb_h1: number of h1 headers on the page (it must not be big)
+        inconsistencies: number of headers change inconsistencies (ex: h4 followed by h1)
+    }
+    """
+    driver = webdriver.Firefox()
+    driver.implicitly_wait(3)
+    driver.get(url)
+    page = driver.page_source
+    nb_h1 = page.count("<h1")
+    parser = MyHTMLParser()
+    parser.feed(page)
+    anomaly = 0
+    for i in range(len(parser.headers) - 1):
+        if int(parser.headers[i][1]) - int(parser.headers[i+1][1]) > 1:
+            anomaly += 1
+    return {"nb_h1": nb_h1, "inconsistencies": anomaly}
 
 
 def ssl_expiry_datetime(hostname: str):
