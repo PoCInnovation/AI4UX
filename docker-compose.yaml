@@ -1,0 +1,16 @@
+version: '3'
+
+services:
+  front:
+    build: front/
+    environment:
+      - REACT_APP_API_URL:http://localhost:5000
+      - HOST=0.0.0.0
+      - PORT=3000
+    ports:
+      - 3000:3000
+
+  back:
+    build: back/
+    ports:
+      -  5000:5000
