@@ -7,7 +7,7 @@ const sdk = require('./services/apiSDK');
 const ApiSDK = new sdk.ApiSDK()
 
 function App() {
-    const [pageName, setPageName] = useState("UX Analyser")
+    const [pageName, setPageName] = useState("Venus")
     const [url, setURL] = useState("")
     const [analyse, setAnalyse] = useState(false)
     const [alert, setAlert] = useState(false)
