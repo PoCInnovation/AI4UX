@@ -25,7 +25,6 @@ def home():
 def analyze_speedtest():
     url: str = request.args.get("url")
 
-    print(url)
     try:
         http.head(url)
         browser_score, mobile_score = speedtest(url)
@@ -36,7 +35,8 @@ def analyze_speedtest():
         }
 
         return response
-    except Exception:
+    except Exception as e:
+        print("ERROR:", e)
         return 'wrong url', 404
 
 
@@ -82,14 +82,15 @@ def analyse_colors():
     temp = tempfile.NamedTemporaryFile()
     screen_web_page(url, (1920, 1080), temp.name)
     img = Image.open(temp.name)
-    colorNumber, colorBlind, paddingRight, paddingLeft = dataColor(img)
+    colorNumber, colorBlind, paddingRight, paddingLeft, mainColors = dataColor(img)
     temp.close()
 
-    return {"colorNumber": colorNumber, "colorBlind": colorBlind, "paddingRight": paddingRight, "paddingLeft": paddingLeft}
+    return {"colorNumber": colorNumber, "colorBlind": colorBlind, "paddingRight": paddingRight, "paddingLeft": paddingLeft, "mainColors": mainColors}
 
 @app.route("/analyze/run", methods=["GET"])
 def analyse_run():
     url: str = request.args.get("url")
+
     speedtest_result = analyze_speedtest()
     scroll_result = analyze_horizontal_scroll()
     hearders_result = analyze_headers_consistency()
@@ -97,20 +98,38 @@ def analyse_run():
     responsive_result = analyse_responsive()
     clutter_result = analyse_clutter()
     colors_result = analyse_colors()
-    #clutterScore, pageLenScore = get_interaction_clutter(url)
 
-    return {"TODO1": 0, "TODO2": 0, "TODO3": 0, "TODO4": 0}
+    return {
+        "all_result": [
+            speedtest_result["mobile"],
+            speedtest_result["browser"],
+            float(scroll_result),
+            hearders_result["nb_h1"], # ''
+            hearders_result["inconsistencies"], # ''
+            responsive_result["score"],
+            clutter_result["clutterScore"],
+            clutter_result["pageLenScore"],
+            colors_result["colorNumber"],
+            colors_result["colorBlind"],
+            colors_result["paddingRight"],
+            colors_result["paddingLeft"],
+            colors_result["mainColors"],
+            keypoint_result
+            ]
+         }
 
 
-@app.route("/model/train", methods=["POST"])
+@app.route("/model/train", methods=["GET"])
 def train_model():
-    t_scores = [np.tanh(scr) for scr in request.json['target_scores']]
-    t_url = request.json['target_url']
+    url: str = request.args.get("url")
+    results = analyse_run()
+    scores = [np.tanh(scr) for scr in results["all_result"][:12]]
+
     model = Model(Conv2D)
     model.load("./conv2d.torch")
     temp = tempfile.NamedTemporaryFile()
-    screen_web_page(t_url, (1920, 1080), temp.name)
-    pred = model.train(Image.open(temp.name), t_scores)
+    screen_web_page(url, (1920, 1080), temp.name)
+    pred = model.train(Image.open(temp.name), scores)
     model.save("./conv2d.torch")
     temp.close()
 
