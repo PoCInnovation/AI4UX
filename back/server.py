@@ -133,7 +133,7 @@ def train_model():
     model.save("./conv2d.torch")
     temp.close()
 
-    return {"predictions": pred}
+    return {"predictions": pred, "result": results}
 
 @app.route("/model/predict", methods=["POST"])
 def predict_model():
