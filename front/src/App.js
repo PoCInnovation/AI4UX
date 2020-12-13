@@ -20,10 +20,12 @@ function App() {
     }
 
     const inputAlign = {
+        minWidth: "520px",
         position: "fixed",
         left: "50%",
         bottom: "70px",
         transform: "translate(-50%, -50%)",
+        marginLeft: "48px",
         margin: "0 auto",
     }
     const defaultInput = {
