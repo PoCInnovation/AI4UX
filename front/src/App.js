@@ -13,6 +13,7 @@ function App() {
     const [url, setURL] = useState("")
     const [analyse, setAnalyse] = useState(false)
     const [alert, setAlert] = useState(false)
+    const [click, setClick] = useState(false);
 
     const titleAlign = {
         verticalAlign: "text-bottom",
@@ -54,17 +55,21 @@ function App() {
         justifyContent: "center",
         marginTop: "30vh",
     }
+
     async function handleAnalyse() {
         console.log((await ApiSDK.getAll(url)));
         if (url.length === 0 || (await ApiSDK.checkURL(url, false)) === false) {
             setAlert(true)
-            setTimeout(function(){ setAlert(false); }, 3000);
+            setTimeout(function () {
+                setAlert(false);
+            }, 3000);
             return
         }
         if (analyse === false) {
             setAnalyse(!analyse)
         }
         setPageName(url)
+        setClick(true)
     }
 
     return (
@@ -75,16 +80,20 @@ function App() {
                     analyse === true ? <Analyze url={url}/> : <Alert severity="info">We are currently running the analysis on the website you provided</Alert>
                 }
                 <div style={analyse === true ? inputAlign : {}}>
-                    <input type="text" placeholder="Enter an url" onChange={event => {setURL(event.target.value)}} style={defaultInput}/>
+                    <input type="text" placeholder="Enter an url" onChange={event => {
+                        setURL(event.target.value)
+                    }} style={defaultInput}/>
                     <Button variant="contained" color="primary" onClick={handleAnalyse}>
                         Analyse
                     </Button>
                 </div>
-                {alert === true && (<Alert style={{marginTop: "20px",}} severity="error">The url you provided is not valid</Alert>) }
+                {alert === true && (
+                    <Alert style={{marginTop: "20px",}} severity="error">The url you provided is not valid</Alert>)}
             </div>
             <div className="Footer">
                 <p style={{display: "inline-block",}}>Made with love by</p>
-                <a style={{paddingLeft: "5px", color: "#DB4D55",}} href="http://poc-innovation.com/" target="_blank" rel="noreferrer">PoC</a>
+                <a style={{paddingLeft: "5px", color: "#DB4D55",}} href="http://poc-innovation.com/" target="_blank"
+                   rel="noreferrer">PoC</a>
             </div>
         </div>
     );

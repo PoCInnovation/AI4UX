@@ -6,7 +6,7 @@ const axios = require('axios');
 class ApiSDK {
     requester = axios.create({
         baseURL: 'http://localhost:5000',
-        timeout: 100000,
+        timeout: 10000000,
     });
 
     async getSecurity(url) {
