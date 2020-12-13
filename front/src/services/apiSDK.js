@@ -9,14 +9,27 @@ class ApiSDK {
         timeout: 100000,
     });
 
+    async getSecurity(url) {
+        const res = await this.requester.get(`/analyze/security?url=${url}`);
+        return Number(res.data);
+    }
+
     async checkAPI() {
         return await this.requester.get('/').then(() => true).catch(() => false);
     }
 
     async checkURL(url) {
-        return await axios.get(url)
-            .then(() => true)
-            .catch(() => false);
+        try {
+            new URL(url);
+        } catch (e) {
+            return false;
+        }
+
+        let request;
+        request = new XMLHttpRequest();
+        await request.open('GET', url, true);
+        await request.send();
+        return request.status !== 404;
     }
 
     /**

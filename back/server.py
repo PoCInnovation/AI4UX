@@ -4,7 +4,7 @@ import requests as http
 from flask import request
 from flask_cors import CORS, cross_origin
 
-from analysis import speedtest, horizontal_scroll, headers_consistency, read_page
+from analysis import speedtest, horizontal_scroll, headers_consistency, read_page, get_security
 
 app = flask.Flask(__name__)
 cors = CORS(app)
@@ -15,6 +15,13 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 @cross_origin()
 def home():
     return "200"
+
+
+@app.route('/analyze/security', methods=['GET'])
+@cross_origin()
+def security():
+    url: str = request.args.get("url")
+    return str(get_security(url))
 
 
 @app.route("/analyze/speedtest", methods=['GET'])

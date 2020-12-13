@@ -1,12 +1,18 @@
 import './App.css';
 import {useState} from "react";
 import {Button} from "@material-ui/core";
+import Alert from '@material-ui/lab/Alert';
 import Analyze from "./components/analyse";
+
+const sdk = require('./services/apiSDK');
+
+const ApiSDK = new sdk.ApiSDK()
 
 function App() {
     const [pageName, setPageName] = useState("UX Analyser")
     const [url, setURL] = useState("")
     const [analyse, setAnalyse] = useState(false)
+    const [alert, setAlert] = useState(false)
 
     const titleAlign = {
         verticalAlign: "text-bottom",
@@ -21,10 +27,12 @@ function App() {
     }
 
     const inputAlign = {
+        minWidth: "520px",
         position: "fixed",
         left: "50%",
         bottom: "70px",
         transform: "translate(-50%, -50%)",
+        marginLeft: "48px",
         margin: "0 auto",
     }
     const defaultInput = {
@@ -47,7 +55,9 @@ function App() {
         marginTop: "30vh",
     }
     async function handleAnalyse() {
-        if (url.length === 0) {
+        if (url.length === 0 || (await ApiSDK.checkURL(url)) === false) {
+            setAlert(true)
+            setTimeout(function(){ setAlert(false); }, 3000);
             return
         }
         if (analyse === false) {
@@ -69,10 +79,11 @@ function App() {
                         Analyse
                     </Button>
                 </div>
+                {alert === true && (<Alert style={{marginTop: "20px",}} severity="error">The url you provided is not valid</Alert>) }
             </div>
             <div className="Footer">
                 <p style={{display: "inline-block",}}>Made with love by</p>
-                <a style={{paddingLeft: "5px", color: "#DB4D55",}} href="http://poc-innovation.com/">PoC</a>
+                <a style={{paddingLeft: "5px", color: "#DB4D55",}} href="http://poc-innovation.com/" target="_blank" rel="noreferrer">PoC</a>
             </div>
         </div>
     );
