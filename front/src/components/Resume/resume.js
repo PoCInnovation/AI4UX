@@ -6,23 +6,8 @@ import 'react-circular-progressbar/dist/styles.css';
 
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-const sdk = require('../../services/apiSDK');
 
-const ApiSDK = new sdk.ApiSDK()
-
-
-function Perfomance({ url }) {
-    const [perf, setPerf] = useState(-1)
-
-    useEffect(() => {
-        console.log(url);
-        async function checkPerf() {
-            const res =  await ApiSDK.getPerformance(url).catch(() => setPerf(() => 0));
-            setPerf(() => res);
-        }
-        checkPerf()
-    }, [])
-
+function Perfomance({ perf }) {
     if (perf < 0) {
         return (
             <div>
@@ -42,13 +27,13 @@ function Perfomance({ url }) {
     }
 }
 
-export default function Resume({ url }) {
+export default function Resume({ perf }) {
     return (
         <div className="Resume">
             <div className="Resume-cent">
-                <Perfomance url={url}/>
-                <Perfomance url={url}/>
-                <Perfomance url={url}/>
+                <Perfomance perf={perf}/>
+                <Perfomance perf={perf}/>
+                <Perfomance perf={perf}/>
             </div>
         </div>
     )

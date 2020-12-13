@@ -68,7 +68,8 @@ function App() {
         setPageName(url)
         setClick(true)
         const res = await ApiSDK.getAll(url);
-        console.log(res)
+        console.log(res.result)
+        console.log(res.result.all_result)
         setResults(res.result.all_result)
         setClick(false);
         setAnalyse(true);
