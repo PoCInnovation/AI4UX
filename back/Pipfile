@@ -6,15 +6,15 @@ name = "pypi"
 [packages]
 flask = "*"
 requests = "*"
-<<<<<<< HEAD
 requests-html = "*"
-=======
 selenium = "*"
 webdriver-manager = "*"
 pytesseract = "*"
 opencv-python = "*"
 pyenchant = "*"
->>>>>>> master
+torch = "*"
+Pillow = "*"
+numpy = "*"
 
 [dev-packages]
 
