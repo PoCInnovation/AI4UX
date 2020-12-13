@@ -1,13 +1,25 @@
 import './App.css';
+import {useState} from "react";
 import {Button} from "@material-ui/core";
 
 function App() {
+    const [pageName, setPageName] = useState("UX Analyser")
+    const [url, setURL] = useState("")
+
+    async function handleAnalyse() {
+        if (url.length === 0) {
+
+        }
+        setPageName(url)
+    }
+
     return (
         <div>
             <div className="App">
-                <p className="Title"> UX Analyzer</p>
+                <p className="Title">{pageName}</p>
+                {}
                 <div>
-                    <input type="text" placeholder="Enter an url"
+                    <input type="text" placeholder="Enter an url" onChange={event => {setURL(event.target.value)}}
                            style={{
                                padding: "10px",
                                borderRadius: "5px",
@@ -20,8 +32,8 @@ function App() {
                                marginTop: "-10px"
                            }}
                     />
-                    <Button variant="contained" color="primary">
-                        Analyze
+                    <Button variant="contained" color="primary" onClick={handleAnalyse}>
+                        Analyse
                     </Button>
                 </div>
 
