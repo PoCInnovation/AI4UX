@@ -71,7 +71,7 @@ function App() {
             <div style={analyse === true ? {} : defaultApp}>
                 <p style={analyse === true ? titleAlign : defaultTitle}>{pageName}</p>
                 {
-                    analyse === true ? <Analyze/> : <div/>
+                    analyse === true ? <Analyze url={url}/> : <div/>
                 }
                 <div style={analyse === true ? inputAlign : {}}>
                     <input type="text" placeholder="Enter an url" onChange={event => {setURL(event.target.value)}} style={defaultInput}/>

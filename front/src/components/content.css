@@ -1,6 +1,8 @@
 .Content {
+    display: inline-block;
     padding: 15px;
     height: 70vh;
+    margin-left: 10%;
 }
 
 .Left-side {
@@ -34,7 +36,6 @@ h2 {
 
     border-radius: 10px;
     padding: 5px;
-
 }
 
 .Right-side {
@@ -50,4 +51,5 @@ h2 {
     height: 100%;
 
     border-radius: 15px;
+    padding: 15px;
 }

@@ -18,18 +18,22 @@ class ApiSDK {
         return await this.requester.get('/').then(() => true).catch(() => false);
     }
 
-    async checkURL(url) {
-        try {
-            new URL(url);
-        } catch (e) {
-            return false;
-        }
+    async checkURL(url, test) {
+        if (!test) {
+            try {
+                new URL(url);
+            } catch (e) {
+                return false;
+            }
 
-        let request;
-        request = new XMLHttpRequest();
-        await request.open('GET', url, true);
-        await request.send();
-        return request.status !== 404;
+            let request;
+            request = new XMLHttpRequest();
+            await request.open('GET', url, true);
+            await request.send();
+            return request.status !== 404;
+        } else {
+            return await axios.get(url).catch(() => false).then(() => true);
+        }
     }
 
     /**

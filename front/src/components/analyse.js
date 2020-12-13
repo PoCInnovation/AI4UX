@@ -5,7 +5,7 @@ import UI from './UI/ui'
 
 import Resume from './Resume/resume'
 
-export default function Analyze(url) {
+export default function Analyze({ url }) {
     return (
         <div className="Content">
             <div className="Left-side">

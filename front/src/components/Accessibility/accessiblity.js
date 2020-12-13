@@ -13,12 +13,12 @@ function SSL(url) {
 
 
     useEffect(() => {
-        async function test() {
+        async function checkSec() {
             const res = await ApiSDK.getSecurity(url).catch((e) => setSsl(() => 0));
             setSsl(() => res);
             console.log(ssl);
         }
-        test()
+        checkSec()
     }, [])
 
     if (ssl === 10) {

@@ -3,7 +3,7 @@ const sdk = require('./services/apiSDK');
 const ApiSDK = new sdk.ApiSDK()
 
 async function main() {
-    const check = await ApiSDK.checkURL('https://tresorio.com');
+    const check = await ApiSDK.checkURL('https://tresorio.com', true);
 
     console.log('Check');
     console.log(check)
