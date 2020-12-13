@@ -36,7 +36,7 @@ The user experience is also impacted by the security of the page, otherwise your
 
 #### Transfer learning
 
-Everytime someone makes a request to analyze a website, we improve our transfer learning model. The purpose of this model is to evaluate the various KPIs we currently analyze with algorithms from a simple screenshot of the website.
+Everytime someone makes a request to analyze a website, we improve our deep learning model. The purpose of this model is to evaluate the various KPIs we currently analyze with algorithms from a simple screenshot of the website.
 
 The more requests are made, the more our model becomes efficient in evaluating your website KPIs.
 
