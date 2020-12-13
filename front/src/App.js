@@ -1,6 +1,7 @@
 import './App.css';
 import {useState} from "react";
 import {Button} from "@material-ui/core";
+import Analyze from "./components/analyse";
 
 function App() {
     const [pageName, setPageName] = useState("UX Analyser")
@@ -60,7 +61,7 @@ function App() {
             <div style={analyse === true ? {} : defaultApp}>
                 <p style={analyse === true ? titleAlign : defaultTitle}>{pageName}</p>
                 {
-
+                    analyse === true ? <Analyze/> : <div/>
                 }
                 <div style={analyse === true ? inputAlign : {}}>
                     <input type="text" placeholder="Enter an url" onChange={event => {setURL(event.target.value)}} style={defaultInput}/>
