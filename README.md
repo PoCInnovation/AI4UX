@@ -4,6 +4,8 @@
 Venus is an all-in-one UX analyser that scores a website on its usability.
 It uses an AI that is based on machine learning models as well as in-depth analysis algorithms.
 
+[Here is the pitch introducing the project](https://www.youtube.com/watch?v=0OKr8xxV6LI)
+
 ![Screenshot](/.github/screen.png)
 
 ## Features
