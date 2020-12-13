@@ -14,6 +14,7 @@ function App() {
     const [analyse, setAnalyse] = useState(false)
     const [alert, setAlert] = useState(false)
     const [click, setClick] = useState(false);
+    const [results, setResults] = useState();
 
     const titleAlign = {
         verticalAlign: "text-bottom",
@@ -57,7 +58,6 @@ function App() {
     }
 
     async function handleAnalyse() {
-        console.log((await ApiSDK.getAll(url)));
         if (url.length === 0 || (await ApiSDK.checkURL(url, false)) === false) {
             setAlert(true)
             setTimeout(function () {
@@ -70,6 +70,7 @@ function App() {
         }
         setPageName(url)
         setClick(true)
+        setResults((await ApiSDK.getAll(url)));
     }
 
     return (
