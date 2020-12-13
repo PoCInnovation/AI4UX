@@ -41,7 +41,7 @@ class Conv2D(nn.Module):
 class Model():
     def __init__(self, modelClass, lr=0.01):
         self.lr = lr
-        self.model = modelClass(4, 5)
+        self.model = modelClass(4, 12)
         self.criterion = nn.MSELoss()
         self.optimizer = optim.Adam(self.model.parameters(), lr=lr)
 
