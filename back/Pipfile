@@ -8,6 +8,9 @@ flask = "*"
 requests = "*"
 selenium = "*"
 webdriver-manager = "*"
+pytesseract = "*"
+opencv-python = "*"
+pyenchant = "*"
 
 [dev-packages]
 
