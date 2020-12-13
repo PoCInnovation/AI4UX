@@ -8,6 +8,8 @@ It uses an AI that is based on machine learning models as well as in-depth analy
 
 ## Features
 
+We perform more than 10 tests on the website based on powerful Algorithms and Machine Learning models. Thus one analysis can take up to 3 minutes.
+
 #### UX analysis
 
 We made in-depth analysis algorithms to evaluate:
