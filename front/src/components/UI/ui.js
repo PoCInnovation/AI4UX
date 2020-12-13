@@ -1,7 +1,5 @@
 import '../content.css'
 import {useEffect, useState} from "react";
-import CloseIcon from '@material-ui/icons/Close';
-import CheckIcon from '@material-ui/icons/Check';
 
 
 
