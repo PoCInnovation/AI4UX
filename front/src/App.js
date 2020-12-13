@@ -65,15 +65,10 @@ function App() {
             }, 3000);
             return
         }
-
         setPageName(url)
-        setClick(true)
-        setResults((await ApiSDK.getAll(url)));
-        console.log('result')
-        console.log(results)
-        if (analyse === false) {
-            setAnalyse(!analyse)
-        }
+        setClick(true)setResults((await ApiSDK.getAll(url)));
+        setClick(false);
+        setAnalyse(true);
     }
 
     return (
@@ -81,9 +76,7 @@ function App() {
             <div style={analyse === true ? {} : defaultApp}>
                 <p style={analyse === true ? titleAlign : defaultTitle}>{pageName}</p>
                 {
-                    analyse === true ? <Analyze url={url}/> : click === true ?
-                        <Alert severity="info">We are currently running the analysis on the website you
-                            provided</Alert> : <div/>
+                    analyse === true ? <Analyze url={url}/> : <div />
                 }
                 <div style={analyse === true ? inputAlign : {}}>
                     <input type="text" placeholder="Enter an url" onChange={event => {
@@ -95,6 +88,7 @@ function App() {
                 </div>
                 {alert === true && (
                     <Alert style={{marginTop: "20px",}} severity="error">The url you provided is not valid</Alert>)}
+                {click === true ? <Alert style={{marginTop: "20px",}} severity="info">We are currently running the analysis on the website you provided</Alert> : <div /> }
             </div>
             <div className="Footer">
                 <p style={{display: "inline-block",}}>Made with love by</p>
