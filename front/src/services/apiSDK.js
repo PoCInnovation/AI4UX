@@ -92,6 +92,7 @@ class ApiSDK {
 
     async getAll(url) {
         const res = await this.requester.get(`/model/train?url=${url}`)
+        return res.data;
     }
 }
 

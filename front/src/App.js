@@ -55,6 +55,7 @@ function App() {
         marginTop: "30vh",
     }
     async function handleAnalyse() {
+        console.log((await ApiSDK.getAll(url)));
         if (url.length === 0 || (await ApiSDK.checkURL(url, false)) === false) {
             setAlert(true)
             setTimeout(function(){ setAlert(false); }, 3000);
@@ -71,7 +72,7 @@ function App() {
             <div style={analyse === true ? {} : defaultApp}>
                 <p style={analyse === true ? titleAlign : defaultTitle}>{pageName}</p>
                 {
-                    analyse === true ? <Analyze url={url}/> : <div/>
+                    analyse === true ? <Analyze url={url}/> : <Alert severity="info">We are currently running the analysis on the website you provided</Alert>
                 }
                 <div style={analyse === true ? inputAlign : {}}>
                     <input type="text" placeholder="Enter an url" onChange={event => {setURL(event.target.value)}} style={defaultInput}/>
