@@ -16,25 +16,25 @@ We perform more than 10 tests on the website based on powerful Algorithms and Ma
 
 We made in-depth analysis algorithms to evaluate:
 
-1. The consistency and clutter of a website. Our algorithms scores the website based on the number of the possible user interactions. The more interactions, the less the score. This algorithms are defined [here](https://github.com/AI4UX/2020_PoC/blob/master/back/clutter.py) and bases their score calculations on a self-generated dataset based on various sites found with google search automated queries.
-2. We also analyzed the page length and the number of items shown. This KPI is important to evaluate the complexity of the website, and therefore the difficulty to get all information for the user.
-3. The load speed of the website (on desktop and mobile). A slow site implies a ruined user experience. We put this metrics in the core of our analysis to evaluate the performance of the website.
-4. The information ordering. We think that the more a user scrolls on your website, the less the information he encounters should be important. Important pieces of information should be placed right at the beginning of each of your website page. In order to check this, we run two checks :
-     * first we analyze the header consistency of each of the website pages : if a page mixes small and big titles in an unordered way, we reduce its efficiency score. This algorithm are defined [here](https://github.com/AI4UX/2020_PoC/blob/master/back/analysis.py)
-     * then we perform keywords analysis on the top part of each pages. We analyze their relevance and importance for the user. Those keywords are then displayed on the frontend of the project after the analysis. This part uses computer vision algorithms, which implementations can be found [here](https://github.com/AI4UX/2020_PoC/blob/master/back/analysis.py)
+1. The consistency and clutter of a website. Our algorithms score the website based on the quantity of possible user interactions. The more interactions there are, the lower the score. These algorithms are defined [here](https://github.com/AI4UX/2020_PoC/blob/master/back/clutter.py) and base their score calculations on a self-generated dataset based on various sites found with google search automated queries.
+2. We also analyzed the page length and the number of items shown. This KPI is important to evaluate the complexity of the website, and therefore the trouble a user has to go through to get the information.
+3. The load speed of the website (on desktop and mobile). A slow website implies a ruined user experience. We put this metric in the core of our analysis to evaluate the performance of the website.
+4. The order of information. We think that the more a user scrolls on your website, the less the information he encounters should be important. Important pieces of information should be placed right at the beginning of each of your website page. In order to check this, we run two checks :
+     * first we analyze the header consistency of each of the website pages : if a page mixes small and big titles in an unordered way, we reduce its efficiency score. This algorithm is defined [here](https://github.com/AI4UX/2020_PoC/blob/master/back/analysis.py)
+     * then we perform keyword analysis on the top part of each page. We analyze their relevance and importance to the user. These keywords are then displayed on the frontend of the project after the analysis. This part uses computer vision algorithms, whose implementations can be found [here](https://github.com/AI4UX/2020_PoC/blob/master/back/analysis.py)
 
 
 #### UI analysis
 
-1. The visual coherence in the colors choice. Our algorithm defined [here](https://github.com/AI4UX/2020_PoC/blob/master/back/color.py) produces statistics on the most used colors and evaluates the coherence of this choice based on color complementarity.
-2. The visual cluttering : based on our statistics produced on step 1, we analyse the most used colors on certain areas of the screen and determine if the website layout is not too complex and has blank space.
-3. Accessibility : with those color analytics, we also check if the website is usable for all types of color-blind people. This metrics are important because they significantly impact the user experience of color-blind people. This algorithm is defined [here](https://github.com/AI4UX/2020_PoC/blob/master/back/color.py)
-4. Mobile compatibility : all of our algorithms are also used on the mobile version of the website, allowing us to check its accessibility from a smartphone.
+1. The visual coherence of the color choice. Our algorithm defined [here](https://github.com/AI4UX/2020_PoC/blob/master/back/color.py) produces statistics about the most used colors and evaluates the coherence of this choice based on color complementarity.
+2. The visual cluttering : based on statistics produced in step 1, we analyse the most used colors on certain areas of the screen and determine if the website layout is not too complex and has sufficient blank spaces.
+3. Accessibility : with the color analytics, we also check if the website is usable for all types of color-blind people. This metric is important because it can significantly impact the user experience of color-blind people. This algorithm is defined [here](https://github.com/AI4UX/2020_PoC/blob/master/back/color.py)
+4. Mobile compatibility : all of our algorithms are also used on the mobile version of the target website, allowing us to check its accessibility from a smartphone.
 
 
 #### Security analysis
 
-The user experience is also impacted by the security of the page, otherwise your web browser will show warnings reduce the quality of the user journey. We check the validity of the ssl certificate [here](https://github.com/AI4UX/2020_PoC/blob/master/back/analysis.py).
+The user experience is also impacted by the security of the page, otherwise your web browser will show warnings and reduce the quality of the user journey. We check the validity of the ssl certificate [here](https://github.com/AI4UX/2020_PoC/blob/master/back/analysis.py).
 
 #### Transfer learning
 
@@ -58,7 +58,7 @@ Or go to this link https://ai4ux.poc-innovation.com/
 
 Clone the repository and launch the following command from the root:
 ```bash
-docker compose up
+docker-compose up -d --build
 ```
 A popup should then appear.
 
