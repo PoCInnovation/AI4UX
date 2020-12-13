@@ -58,4 +58,4 @@ A popup should then appear.
 
 If it doesn't, go to your [localhost:3000](http://localhost:3000) for the frontend and [localhost:5000](http://localhost:5000) for the backend.
 
-Made with :heart: by PoC
+Made with :heart: by [PoC](http://poc-innovation.com)
