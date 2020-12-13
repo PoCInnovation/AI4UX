@@ -196,8 +196,9 @@ def get_interaction_clutter(url) -> float:
     print(div, ratio)
     return(calcClutterScore(div, ratio))
 
-clutterScore, pageLenScore = get_interaction_clutter("https://www.google.com/search?hl=en&sxsrf=ALeKk03y8oKG1qvCUB1gsakPjE3Ksqfv1g%3A1607802022466&source=hp&ei=phzVX_G3GfLYgwelpLOQCQ&iflsig=AINFCbYAAAAAX9UqthSeRvg2zJVY2HsmqApgtNBj96p1&q=ecommerce&oq=ecommerce&gs_lcp=CgZwc3ktYWIQA1DXHVjFL2DWMGgAcAB4AIABAIgBAJIBAJgBAKABAaoBB2d3cy13aXqwAQA&sclient=psy-ab&ved=0ahUKEwjxoqmjmcntAhVy7OAKHSXSDJIQ4dUDCAY&uact=5")
-print(clutterScore, pageLenScore)
+if __name__ == "__main__":
+    clutterScore, pageLenScore = get_interaction_clutter("https://www.google.com/search?hl=en&sxsrf=ALeKk03y8oKG1qvCUB1gsakPjE3Ksqfv1g%3A1607802022466&source=hp&ei=phzVX_G3GfLYgwelpLOQCQ&iflsig=AINFCbYAAAAAX9UqthSeRvg2zJVY2HsmqApgtNBj96p1&q=ecommerce&oq=ecommerce&gs_lcp=CgZwc3ktYWIQA1DXHVjFL2DWMGgAcAB4AIABAIgBAJIBAJgBAKABAaoBB2d3cy13aXqwAQA&sclient=psy-ab&ved=0ahUKEwjxoqmjmcntAhVy7OAKHSXSDJIQ4dUDCAY&uact=5")
+    print(clutterScore, pageLenScore)
 
 # call function on a a page url
 # returns two scores from 0 to 1
