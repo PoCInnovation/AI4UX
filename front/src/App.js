@@ -81,7 +81,7 @@ function App() {
             </div>
             <div className="Footer">
                 <p style={{display: "inline-block",}}>Made with love by</p>
-                <a style={{paddingLeft: "5px", color: "#DB4D55",}} href="http://poc-innovation.com/" target="_blank">PoC</a>
+                <a style={{paddingLeft: "5px", color: "#DB4D55",}} href="http://poc-innovation.com/" target="_blank" rel="noreferrer">PoC</a>
             </div>
         </div>
     );
