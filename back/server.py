@@ -4,6 +4,9 @@ import requests as http
 from flask import request
 
 from analysis import speedtest, horizontal_scroll, headers_consistency, read_page
+from models import Model, Conv2D
+from screen_page import screen_web_page
+from PIL import Image
 
 app = flask.Flask(__name__)
 
@@ -54,5 +57,17 @@ def analyse_keypoint():
         "mobile": mobile_words
     }
 
+
+@app.route("/model/train", methods=["POST"])
+def train_model():
+    url: str = request.args.get("url")
+    t_scores = request.json['target_scores']
+    t_url = request.json['target_url']
+    model = Model(Conv2D)
+    model.load("./conv2d.torch")
+    screen_web_page(t_url, (1920, 1080), "model_train.jpg")
+    pred = model.train(Image.open("model_train.jpg"), t_scores)
+    model.save("./conv2d.torch")
+    return {"predictions": pred}
 
 app.run(host="0.0.0.0")

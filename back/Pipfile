@@ -11,6 +11,9 @@ webdriver-manager = "*"
 pytesseract = "*"
 opencv-python = "*"
 pyenchant = "*"
+torch = "*"
+Pillow = "*"
+numpy = "*"
 
 [dev-packages]
 
