@@ -24,9 +24,6 @@ def screen_web_page(url: str, size: Tuple[int, int], output: str) -> None:
     width, height = size
 
     driver.get(url)
-    # S = lambda X: driver.execute_script('return document.body.parentNode.scroll' + X)
-    # print(S('Height'))
-    # print(S('Width'))
     driver.set_window_size(width, height)  # May need manual adjustment
     driver.find_element_by_tag_name('body').screenshot(output)
 
