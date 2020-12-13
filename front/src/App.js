@@ -9,7 +9,7 @@ const sdk = require('./services/apiSDK');
 const ApiSDK = new sdk.ApiSDK()
 
 function App() {
-    const [pageName, setPageName] = useState("Venus")
+    const [pageName, setPageName] = useState("UX Analyse")
     const [url, setURL] = useState("")
     const [analyse, setAnalyse] = useState(false)
     const [alert, setAlert] = useState(false)
@@ -65,12 +65,11 @@ function App() {
             }, 3000);
             return
         }
-        if (analyse === false) {
-            setAnalyse(!analyse)
-        }
         setPageName(url)
         setClick(true)
-        setResults((await ApiSDK.getAll(url)));
+        await setResults((await ApiSDK.getAll(url)));
+        setClick(false);
+        setAnalyse(true);
     }
 
     return (
@@ -78,7 +77,7 @@ function App() {
             <div style={analyse === true ? {} : defaultApp}>
                 <p style={analyse === true ? titleAlign : defaultTitle}>{pageName}</p>
                 {
-                    analyse === true ? <Analyze url={url}/> : <Alert severity="info">We are currently running the analysis on the website you provided</Alert>
+                    analyse === true ? <Analyze url={url}/> : <div />
                 }
                 <div style={analyse === true ? inputAlign : {}}>
                     <input type="text" placeholder="Enter an url" onChange={event => {
@@ -90,6 +89,7 @@ function App() {
                 </div>
                 {alert === true && (
                     <Alert style={{marginTop: "20px",}} severity="error">The url you provided is not valid</Alert>)}
+                {click === true ? <Alert style={{marginTop: "20px",}} severity="info">We are currently running the analysis on the website you provided</Alert> : <div /> }
             </div>
             <div className="Footer">
                 <p style={{display: "inline-block",}}>Made with love by</p>
