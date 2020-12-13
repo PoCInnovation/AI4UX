@@ -3,7 +3,7 @@ FROM python:3.8
 WORKDIR /app
 
 RUN pip install pipenv
-RUN apt update -y && apt install libgl1-mesa-glx -y && apt install libenchant1c2a -y && apt install chromium-driver -y && apt install google-chrome-stable -y
+RUN apt update -y && apt install libgl1-mesa-glx -y && apt install libenchant1c2a -y && apt install chromium-driver -y
 
 COPY Pipfile Pipfile.lock /app/
 
