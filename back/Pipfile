@@ -16,6 +16,7 @@ torch = "*"
 Pillow = "*"
 numpy = "*"
 requests_html = "*"
+extcolors = "*"
 
 [dev-packages]
 
