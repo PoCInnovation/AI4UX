@@ -57,7 +57,8 @@ def dataColor(image):
 
     return score_color, 1 - score_dalto, round(percent_first) / 100 , round(percent_forth) / 100
 
-## IMAGE ##
-image = PIL.Image.open("web_screenshot.png")
+if __name__ == "__main__":
+    ## IMAGE ##
+    image = PIL.Image.open("web_screenshot.png")
 
-print(dataColor(image))
+    print(dataColor(image))
