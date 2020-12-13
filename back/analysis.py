@@ -66,7 +66,9 @@ def speedtest(url: str) -> Tuple[float, float]:
 def horizontal_scroll(url: str) -> int:
     """ True if there is a horizontal scroll on the page
     """
-    driver = webdriver.Firefox()
+    options = webdriver.ChromeOptions()
+    options.headless = True
+    driver = webdriver.Chrome(options=options)
     driver.implicitly_wait(3)
     driver.get(url)
     js = 'return document.documentElement.scrollWidth>document.documentElement.clientWidth;'
@@ -91,7 +93,10 @@ def headers_consistency(url: str) -> Tuple[int, int]:
         inconsistencies: number of headers change inconsistencies (ex: h4 followed by h1)
     }
     """
-    driver = webdriver.Firefox()
+    options = webdriver.ChromeOptions()
+    options.headless = True
+    
+    driver = webdriver.Chrome(options=options)
     driver.implicitly_wait(3)
     driver.get(url)
     page = driver.page_source

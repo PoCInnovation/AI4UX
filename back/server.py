@@ -6,6 +6,7 @@ import requests as http
 from PIL import Image
 from flask import request
 
+from color import dataColor
 from models import Model, Conv2D
 from screen_page import screen_web_page
 from clutter import get_interaction_clutter
@@ -21,7 +22,7 @@ def home():
 
 
 @app.route("/analyze/speedtest", methods=['GET'])
-def analyze():
+def analyze_speedtest():
     url: str = request.args.get("url")
 
     print(url)
@@ -74,6 +75,32 @@ def analyse_clutter():
     clutterScore, pageLenScore = get_interaction_clutter(url)
 
     return {"clutterScore": clutterScore, "pageLenScore": pageLenScore}
+
+@app.route("/analyze/colors", methods=["GET"])
+def analyse_colors():
+    url: str = request.args.get("url")
+    temp = tempfile.NamedTemporaryFile()
+    screen_web_page(url, (1920, 1080), temp.name)
+    img = Image.open(temp.name)
+    colorNumber, colorBlind, paddingRight, paddingLeft = dataColor(img)
+    temp.close()
+
+    return {"colorNumber": colorNumber, "colorBlind": colorBlind, "paddingRight": paddingRight, "paddingLeft": paddingLeft}
+
+@app.route("/analyze/run", methods=["GET"])
+def analyse_run():
+    url: str = request.args.get("url")
+    speedtest_result = analyze_speedtest()
+    scroll_result = analyze_horizontal_scroll()
+    hearders_result = analyze_headers_consistency()
+    keypoint_result = analyse_keypoint()
+    responsive_result = analyse_responsive()
+    clutter_result = analyse_clutter()
+    colors_result = analyse_colors()
+    #clutterScore, pageLenScore = get_interaction_clutter(url)
+
+    return {"TODO1": 0, "TODO2": 0, "TODO3": 0, "TODO4": 0}
+
 
 @app.route("/model/train", methods=["POST"])
 def train_model():
